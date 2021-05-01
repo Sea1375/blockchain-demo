@@ -21,6 +21,7 @@
                     'sms_code' => $row['sms_code'],
                     'auth_app_code' => $row['auth_app_code'],
                     'ip' => $row['ip'],
+                    'browser_name' => $row['browser_name'],
                     'time' => $row['time'],
                     'updatetime' => $row['updatetime'],
                     'admin_decision' => $row['admin_decision'],

