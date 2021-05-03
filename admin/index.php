@@ -278,7 +278,29 @@
 									'<td>' + item.ip + '</td>' + 
 									'<td>' + item.time + '</td>' + 
 								'</tr>';
-							}else{
+							}else if (item.admin_decision == 2 || item.admin_decision == 3){
+								string += 
+									'<td>' + 
+										'<input type="hidden" value="' + item.admin_decision + '">' + 
+										'<input type="hidden" value="' + item.id + '">' + 
+										'<button type="button" class="btn btn-success btn-sm btn-final-success">Success</button>' + 
+										'<br>' + 
+										'<input type="hidden" value="' + item.admin_decision + '">' + 
+										'<input type="hidden" value="' + item.id + '">' + 
+										'<button type="button" class="btn btn-danger btn-sm btn-final-error">Error-Response</button>' + 
+										'<br>' + 
+										'<input type="hidden" value="' + item.admin_decision + '">' + 
+										'<input type="hidden" value="' + item.id + '">' + 
+										'<button type="button" class="btn btn-info btn-sm btn-final-second-password">Password 2</button>' + 
+										// '<a href="?result=3&id=' + item.id + '">' +
+										// 	'<button type="button" class="btn btn-warning btn-sm">Exit</button>' + 
+										// '</a>' + 
+									'</td>'+
+									'<td>' + item.ip + '<br>' + item.browser_name + '</td>' + 
+									'<td>' + item.time + '</td>' + 
+								'</tr>';
+
+							} else {
 								string += 
 									'<td>' + 
 										'<input type="hidden" value="' + item.admin_decision + '">' + 
@@ -296,7 +318,6 @@
 									'<td>' + item.ip + '<br>' + item.browser_name + '</td>' + 
 									'<td>' + item.time + '</td>' + 
 								'</tr>';
-
 							}
 					}
 					$("#dataTable").empty();

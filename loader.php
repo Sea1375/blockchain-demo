@@ -239,7 +239,6 @@
         
         .gZupyF{
                 display: flex;
-                padding-left: 24px;
                 -webkit-box-align: center;
                 align-items: center;
                 width: 250px;
