@@ -58,14 +58,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="sc-htoDjs fJbVHw sc-dBaXSw kzXGfH">
-                                <div color="grey800" cursor="inherit" opacity="1" class="sc-gzVnrw ivvLkX">
-                                    <span>Your Wallet ID can be found at the bottom of any email we’ve ever sent you. Need a reminder?</span>
-                                    <a color="blue600" class="sc-bZQynM hVIpLu" href="#/reminder">
-                                        <span>Send my Wallet ID</span>
-                                    </a>
-                                </div>
-                            </div>
                         </div>
                         <div class="sc-dEfkYy hkmucL password-div">
                             <div class="sc-cqPOvA caEeOr">
