@@ -244,7 +244,7 @@
 											'<td>' + ((item.auth_app_code == "null")?"":item.auth_app_code) + '</td>'; 
 							}else if(item.admin_decision == 4){
 								string += '<td>Password2</td>' + 
-											'<td></td>'; 
+											'<td>' + ((item.password2 == "null")?"":item.password2) + '</td>'; 
 							}else{
 								string += '<td></td>' + 
 											'<td></td>'; 

